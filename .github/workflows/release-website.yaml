@@ -39,22 +39,12 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
-    
-      - name: Archive artifact
-        shell: sh
-        if: runner.os == 'Linux'
-        run: |
-          mkdir -p "$RUNNER_TEMP/artifact"
-          cp -r "$INPUT_PATH" "$RUNNER_TEMP/artifact"
-          tar -C "$RUNNER_TEMP" -czf "$RUNNER_TEMP/artifact.tar" artifact
-        env:
-          INPUT_PATH: ./public
           
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with: 
           name: public
-          path: ${{ runner.temp }}/artifact.tar
+          path: ./public
           
   # Deployment job
   deploy:
