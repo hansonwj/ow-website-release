@@ -44,12 +44,9 @@ jobs:
         shell: sh
         if: runner.os == 'Linux'
         run: |
-          tar \
-            --dereference --hard-dereference \
-            -cvf "$RUNNER_TEMP/artifact.tar" \
-            --exclude=.git \
-            --exclude=.github \
-            $INPUT_PATH  # No need to specify --directory
+          mkdir -p "$RUNNER_TEMP/artifact"
+          cp -r "$INPUT_PATH" "$RUNNER_TEMP/artifact"
+          tar -C "$RUNNER_TEMP" -czf "$RUNNER_TEMP/artifact.tar" artifact
         env:
           INPUT_PATH: ./public
           
